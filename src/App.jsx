@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Tilt from "react-parallax-tilt";
+import Particles from "@tsparticles/react";
 import {
   Mail,
   MapPin,
@@ -50,7 +51,6 @@ const Linkedin = ({ size = 24 }) => (
 );
 import "./App.css";
 import { useCallback } from "react";
-import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { Typewriter } from "react-simple-typewriter";
 
