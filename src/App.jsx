@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Tilt from "react-parallax-tilt";
-import Particles from "@tsparticles/react";
+
 import {
   Mail,
   MapPin,
@@ -50,8 +50,7 @@ const Linkedin = ({ size = 24 }) => (
   </svg>
 );
 import "./App.css";
-import { useCallback } from "react";
-import { loadFull } from "tsparticles";
+import { useCallback, useMemo } from "react";
 import { Typewriter } from "react-simple-typewriter";
 
 function App() {
@@ -71,8 +70,18 @@ function App() {
     // No initialization needed for FormSubmit approach
   }, []);
 
-  const particlesInit = useCallback(async (engine) => {
-    await loadFull(engine);
+  // CSS-based particles for background effect
+  const particles = useMemo(() => {
+    return Array.from({ length: 50 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 3 + 1,
+      duration: Math.random() * 20 + 10,
+      delay: Math.random() * 5,
+      opacity: Math.random() * 0.5 + 0.1,
+      color: ['#38bdf8', '#e879f9', '#818cf8'][Math.floor(Math.random() * 3)],
+    }));
   }, []);
 
   const fadeIn = {
@@ -136,52 +145,26 @@ function App() {
 
   return (
     <div className="app-container">
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          background: { color: { value: "transparent" } },
-          fpsLimit: 120,
-          interactivity: {
-            events: {
-              onHover: { enable: true, mode: "grab" },
-              resize: true,
-            },
-            modes: { grab: { distance: 140, links: { opacity: 0.5 } } },
-          },
-          particles: {
-            color: { value: ["#38bdf8", "#e879f9", "#818cf8"] },
-            links: {
-              color: "#ffffff",
-              distance: 150,
-              enable: true,
-              opacity: 0.1,
-              width: 1,
-            },
-            move: {
-              direction: "none",
-              enable: true,
-              outModes: { default: "bounce" },
-              random: false,
-              speed: 1.5,
-              straight: false,
-            },
-            number: { density: { enable: true, area: 800 }, value: 60 },
-            opacity: { value: 0.5 },
-            shape: { type: "circle" },
-            size: { value: { min: 1, max: 3 } },
-          },
-          detectRetina: true,
-        }}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: -5,
-        }}
-      />
+      {/* CSS Particles Background */}
+      <div className="css-particles" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -5, overflow: 'hidden', pointerEvents: 'none' }}>
+        {particles.map((p) => (
+          <span
+            key={p.id}
+            className="css-particle"
+            style={{
+              position: 'absolute',
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              borderRadius: '50%',
+              backgroundColor: p.color,
+              opacity: p.opacity,
+              animation: `floatParticle ${p.duration}s ease-in-out ${p.delay}s infinite alternate`,
+            }}
+          />
+        ))}
+      </div>
       {/* Background Ornaments */}
       <motion.div style={{ y }} className="blob blob-1" />
       <motion.div

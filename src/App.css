@@ -742,3 +742,22 @@ header {
     margin-top: 4rem;
   }
 }
+
+/* CSS Particles Animation */
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-30px) translateX(15px);
+  }
+  50% {
+    transform: translateY(-15px) translateX(-10px);
+  }
+  75% {
+    transform: translateY(-40px) translateX(20px);
+  }
+  100% {
+    transform: translateY(-20px) translateX(-15px);
+  }
+}
